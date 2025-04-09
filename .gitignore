@@ -1,0 +1,10 @@
+node_modules/
+vendor/
+.env
+.DS_Store
+/storage/*.key
+/storage/*.log
+/public/storage
+npm-debug.log
+build/
+.idea/
