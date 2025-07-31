@@ -1,15 +1,24 @@
 #!/usr/bin/env bash
-# Creates folder structure for Time Tracker project
 
-# Backend directories
-mkdir -p backend/app/Http/Controllers
-mkdir -p backend/routes
-mkdir -p backend/storage
+# Set project root folder
+echo "Creating project folders..."
+mkdir time-tracker-pat && cd time-tracker-pat
 
-# Frontend directories
-mkdir -p frontend/public
-mkdir -p frontend/src/services
-mkdir -p frontend/src/components
-mkdir -p frontend/src/styles
+# Backend: Laravel install
+echo "Installing Laravel backend..."
+composer create-project laravel/laravel backend
 
-echo "Project directories created."
+# Frontend: Vite React + TS
+echo "Setting up React frontend..."
+cd backend && cd ..
+mkdir frontend && cd frontend
+npm create vite@latest . -- --template react-ts
+npm install
+npm install @mui/material @mui/icons-material @emotion/react @emotion/styled sass
+
+# Return to root and initialize Git
+echo "Initializing Git..."
+cd ..
+git init
+
+echo "Done."
