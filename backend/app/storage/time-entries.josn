@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "project": "Website Redesign",
+    "description": "Created new landing page",
+    "startTime": "2025-08-01T09:00:00",
+    "endTime": "2025-08-01T11:30:00"
+  },
+  {
+    "id": 2,
+    "project": "API Integration",
+    "description": "Linked payment gateway",
+    "startTime": "2025-08-01T12:00:00",
+    "endTime": "2025-08-01T13:15:00"
+  }
+]
