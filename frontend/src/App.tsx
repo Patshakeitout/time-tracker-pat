@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import { Container, Typography, Box, Tabs, Tab } from '@mui/material';
+import type { TimeEntry } from './api.ts';
+import TimeEntryForm from './components/TimeEntryForm.tsx';
+import TimeEntryTable from './components/TimeEntryTable.tsx';
+import { fetchEntries } from './api';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [entries, setEntries] = useState<TimeEntry[]>([]);
+  const [tab, setTab] = useState(0);
+
+  useEffect(() => {
+    fetchEntries().then(res => setEntries(res.data));
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Container maxWidth="md">
+      <Box component="header" my={4}>
+        <Typography variant="h4" component="h1">Time Tracker</Typography>
+      </Box>
+
+      <Box mb={4}>
+        <TimeEntryForm onAdded={e => setEntries([...entries, e])} />
+      </Box>
+
+      <Box>
+        <Tabs value={tab} onChange={(_, v) => setTab(v)}>
+          <Tab label="By Day" />
+          <Tab label="By Week" />
+        </Tabs>
+        <Box mt={2}>
+          <TimeEntryTable entries={entries} view={tab === 0 ? 'day' : 'week'} />
+        </Box>
+      </Box>
+    </Container>
+  );
 }
 
-export default App
+export default App;
